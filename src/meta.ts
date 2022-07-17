@@ -150,14 +150,8 @@ export class Meta {
     const sver = semver.parse(vraw, {
       includePrerelease: true
     });
-    if (semver.prerelease(vraw)) {
-      if (Meta.isRawStatement(tag.attrs['pattern'])) {
-        vraw = this.setValue(handlebars.compile(tag.attrs['pattern'])(sver), tag);
-      } else {
-        vraw = this.setValue(handlebars.compile('{{version}}')(sver), tag);
-      }
-    } else {
-      vraw = this.setValue(handlebars.compile(tag.attrs['pattern'])(sver), tag);
+    vraw = this.setValue(handlebars.compile(tag.attrs['pattern'])(sver), tag);
+    if (!semver.prerelease(vraw)) {
       latest = true;
     }
 
